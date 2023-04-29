@@ -18,6 +18,7 @@ function myrenderall() {
     .filter((s) => s.includes(impath))
     .forEach((x) => imout.push(x.replace("70X70", "720x720")));
   navigator.clipboard.writeText("wget " + imout.join("\nwget "));
+}
 
 function mygetall() {
   // Fetch all downloads (on specific object page)
