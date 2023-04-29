@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Myminifactory Download assistant
 // @namespace      https://github.com/ksuquix/myminifactory-tamper
-// @version        0.0.4
+// @version        0.0.5
 // @description    An assist so you can see the projects you haven't gotten yet.
 // @include        https://www.myminifactory.com/object/*
 // @require        http://code.jquery.com/jquery-1.12.4.min.js
@@ -10,14 +10,16 @@
 
 function myrenderall() {
   // drop wgets for images into paste buffer (do first while document is focused)
-  impath = $('meta[property="og:image"]').attr("content").match(/.*\//)[0];
-  imout = [];
+  let impath = $('meta[property="og:image"]').attr("content").match(/.*\//)[0];
+  let imout = [];
   $("img")
     .map((_, { src }) => src)
     .get()
     .filter((s) => s.includes(impath))
-    .forEach((x) => imout.push(x.replace("70X70", "720x720")));
+    .forEach((x) => imout.push(x.replace("70X70", "720X720")));
   navigator.clipboard.writeText("wget " + imout.join("\nwget "));
+  console.log("render in paste");
+  alert("Pasted");
 }
 
 function mygetall() {
