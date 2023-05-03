@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Myminifactory Download assistant
 // @namespace      https://github.com/ksuquix/myminifactory-tamper
-// @version        0.0.6
+// @version        0.0.7
 // @description    An assist so you can see the projects you haven't gotten yet.
 // @match        https://www.myminifactory.com/object/*
 // @match        https://www.myminifactory.com/library*
@@ -17,7 +17,7 @@ function myrenderall() {
     .map((_, { src }) => src)
     .get()
     .filter((s) => s.includes(impath))
-    .forEach((x) => imout.push(x.replace("70X70", "720X720")));
+    .forEach((x) => imout.push(x.replace("70X70", "720X720").replace("230X230","720X720")));
   navigator.clipboard.writeText("wget " + imout.join("\nwget "));
   console.log("render in paste");
   alert("Pasted");
