@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Myminifactory Download assistant
 // @namespace      https://github.com/ksuquix/myminifactory-tamper
-// @version        0.0.9
+// @version        0.0.10
 // @description    An assist so you can see the projects you haven't gotten yet.
 // @match        https://www.myminifactory.com/object/*
 // @match        https://www.myminifactory.com/library*
@@ -44,8 +44,30 @@ function mylibrenderall() {
   alert(`Pasted: ${imout.length}\n`+imout.join("\n"));
 }
 
+function mygetloop() {
+  if(dloader >= $("button.actionButton").length) {
+    $("div[role=presentation] div").click();
+  } else {
+    $("button.actionButton")[dloader].click();
+    console.log(dloader);
+    dloader++;
+    setTimeout(function() {
+      mygetloop();
+    },1000);
+  }
+}
+
+function mylibgetall() {
+  dloader = 0;
+  $("div.object-card-options-box div button").click();
+  mygetloop();
+}
+
+var dloader = 0;
 $(document).ready(function () {
   $("button.MuiButton-containedPrimary").after('<button class="basic-button  red mylibrender"><i class="ico-download fa fa-arrow-down" aria-hidden="true"></i> Renders</button>')
+  $("button.MuiButton-containedPrimary").after('<button class="basic-button  red mylibget"><i class="ico-download fa fa-arrow-down" aria-hidden="true"></i> DL</button>')
+  $('button.mylibget').click(mylibgetall);
   $('button.mylibrender').click(mylibrenderall);
 	$("button.downloadButton").after('<button class="basic-button  red mydownloader"><i class="ico-download fa fa-arrow-down" aria-hidden="true"></i> Files</button>');
 	$('button.mydownloader').click(mygetall);
