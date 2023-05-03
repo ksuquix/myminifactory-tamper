@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Myminifactory Download assistant
 // @namespace      https://github.com/ksuquix/myminifactory-tamper
-// @version        0.0.8
+// @version        0.0.9
 // @description    An assist so you can see the projects you haven't gotten yet.
 // @match        https://www.myminifactory.com/object/*
 // @match        https://www.myminifactory.com/library*
@@ -35,8 +35,11 @@ function mygetall() {
 
 function mylibrenderall() {
   let imout = [];
-  $("div.object-img a img").each(function() { imout.push($(this).attr("src").replace("70X70", "720X720").replace("230X230","720X720"))})
-  navigator.clipboard.writeText("wget " + imout.join("\nwget "));
+  $("div.object-img a img").each(function() { 
+    let imsrc=$(this).attr("src").replace("70X70", "720X720").replace("230X230","720X720");
+    imout.push("wget -O "+imsrc.replace("https://cdn2.myminifactory.com/assets/object-assets/","").replace(/\//g,"-")+" "+imsrc);
+  });
+  navigator.clipboard.writeText(imout.join("\n"));
   console.log("render in paste");
   alert(`Pasted: ${imout.length}\n`+imout.join("\n"));
 }
