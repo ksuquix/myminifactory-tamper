@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Myminifactory Download assistant
 // @namespace      https://github.com/ksuquix/myminifactory-tamper
-// @version        0.0.10
+// @version        0.0.11
 // @description    An assist so you can see the projects you haven't gotten yet.
 // @match        https://www.myminifactory.com/object/*
 // @match        https://www.myminifactory.com/library*
@@ -17,10 +17,13 @@ function myrenderall() {
     .map((_, { src }) => src)
     .get()
     .filter((s) => s.includes(impath))
-    .forEach((x) => imout.push(x.replace("70X70", "720X720").replace("230X230","720X720")));
-  navigator.clipboard.writeText("wget " + imout.join("\nwget "));
+    .forEach(function(x) {
+      let imsrc=x.replace("70X70", "720X720").replace("230X230","720X720");
+      imout.push("wget -O "+imsrc.replace("https://cdn2.myminifactory.com/assets/object-assets/","").replace(/\//g,"-")+" "+imsrc);
+    });
+  navigator.clipboard.writeText(imout.join("\n"));
   console.log("render in paste");
-  alert("Pasted");
+  alert("Pasted: "+`${imout.length}\n`+imout.join("\n"));
 }
 
 function mygetall() {
