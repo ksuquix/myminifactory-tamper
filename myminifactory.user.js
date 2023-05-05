@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Myminifactory Download assistant
 // @namespace      https://github.com/ksuquix/myminifactory-tamper
-// @version        0.0.11
+// @version        0.0.12
 // @description    An assist so you can see the projects you haven't gotten yet.
 // @match        https://www.myminifactory.com/object/*
 // @match        https://www.myminifactory.com/library*
@@ -18,7 +18,7 @@ function myrenderall() {
     .get()
     .filter((s) => s.includes(impath))
     .forEach(function(x) {
-      let imsrc=x.replace("70X70", "720X720").replace("230X230","720X720");
+      let imsrc=x.replace("70X70", "resize").replace("230X230","resize");
       imout.push("wget -O "+imsrc.replace("https://cdn2.myminifactory.com/assets/object-assets/","").replace(/\//g,"-")+" "+imsrc);
     });
   navigator.clipboard.writeText(imout.join("\n"));
@@ -39,7 +39,7 @@ function mygetall() {
 function mylibrenderall() {
   let imout = [];
   $("div.object-img a img").each(function() { 
-    let imsrc=$(this).attr("src").replace("70X70", "720X720").replace("230X230","720X720");
+    let imsrc=$(this).attr("src").replace("70X70", "resize").replace("230X230","resize");
     imout.push("wget -O "+imsrc.replace("https://cdn2.myminifactory.com/assets/object-assets/","").replace(/\//g,"-")+" "+imsrc);
   });
   navigator.clipboard.writeText(imout.join("\n"));
